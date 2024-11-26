@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="inherit_view_company_form" model="ir.ui.view">
+    <field name="name">res.company.form.inherit</field>
+    <field name="model">res.company</field>
+    <field name="inherit_id" ref="base.view_company_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//notebook/page[@name='general_info']" position="after">
+        <page string="Three Level Approve Setting" name="three_level_approve_setting">
+          <group>
+            <group>
+              <field name="three_level_approve"/>
+              <!-- <field name="approval_email_template" />
+              <field name="refuse_email_template" /> -->
+            </group>
+            <group>
+              <field name="manager_approve_limit" widget="monetary"/>
+              <field name="finance_manager_approve_limit" widget="monetary"/>
+              <field name="director_approve_limit" widget="monetary"/>
+            </group>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+</odoo>

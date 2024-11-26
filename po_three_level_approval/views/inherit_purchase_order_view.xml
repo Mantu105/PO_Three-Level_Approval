@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+  <record id="inherited_purchase_order_form" model="ir.ui.view">
+    <field name="name">Inherited Purchase Order Form</field>
+    <field name="model">purchase.order</field>
+    <field name="inherit_id" ref="purchase.purchase_order_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//header" position="inside">
+        <button name="button_approve"
+                type="object"
+                string="Approve Manager"
+                state="to_manager_approve"
+                class="btn btn-primary"
+                groups="po_three_level_approval.group_purchase_manager_access"
+                invisible="state !='to_manager_approve'"/>
+        <button name="button_approve_finance"
+                    type="object"
+                    string="Approve Finance"
+                    state="to_finance_approval"
+                    class="btn btn-primary"
+                    groups="po_three_level_approval.group_purchase_finance_manager_access"
+                    invisible="state !='to_finance_approval'"/>
+        <button name="button_approve_director"
+                    type="object"
+                    string="Approve Director"
+                    state="to_director_approval"
+                    class="btn btn-primary"
+                    groups="po_three_level_approval.group_purchase_director_access"
+                    invisible="state !='to_director_approval'"/>
+        <button name="button_refuse"
+                    type="object"
+                    state="refuse"
+                    string="Refuse"
+                    groups="po_three_level_approval.group_purchase_manager_access,po_three_level_approval.group_purchase_finance_manager_access,po_three_level_approval.group_purchase_director_access"
+                    invisible="state not in ('to_director_approval', 'to_manager_approve','to_finance_approval')"/>
+
+        <button name="button_cancel" 
+                string="Cancel"
+                type="object"
+                invisible="state not in 'to_manager_approve'" 
+                groups="po_three_level_approval.group_purchase_user_access"
+                data-hotkey="x" />            
+      </xpath>
+      <xpath expr="//notebook/page[@name='purchase_delivery_invoice']" position="after">
+        <page string="Approve Information" name="approve_information">
+          <group string="APPROVE INFORMATION">
+            <group>
+              <field name="manager_approval"  readonly="True"/>
+              <field name="finance_manager_approval" readonly="True"/>
+              <field name="director_approval" readonly="True"/>
+            </group>
+            <group>
+              <field name="manager_approval_date" readonly="True"/>
+              <field name="finance_manager_approval_date" readonly="True"/>
+              <field name="director_approval_date" readonly="True"/>
+            </group>
+          </group>
+          <group>
+            <field name="purchase_manager"  readonly="True"/>
+            <field name="finance_manager" readonly="True"/>
+            <field name="director_manager" readonly="True"/>
+          </group>
+          <group string="REFUSE INFORMATION">
+            <group>
+              <field name="refused_by" readonly="True"/>
+              <field name="refused_date" readonly="True"/>
+            </group>
+            <group>
+              <field name="refused_reason" readonly="True"/>
+            </group>
+          </group>
+        </page>
+      </xpath>
+    </field>
+  </record>
+</odoo>
